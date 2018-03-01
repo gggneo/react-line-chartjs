@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import './App.css';
 //import {Line} from 'react-chartjs-2';
 var Chart = require('chart.js-v2');
+
 //var LineChart = require("react-chartjs").Line;
 
 
@@ -92,7 +94,7 @@ class App extends Component {
     gradientStroke.addColorStop(0, 'white');
     gradientStroke.addColorStop(1, 'white');
 
-    var gradientFill = ctx.createLinearGradient(0, 500, 0, 100);
+    var gradientFill = ctx.createLinearGradient(0, 150, 0, 50);
     gradientFill.addColorStop(1, "rgb(249, 77, 43)");
     gradientFill.addColorStop(0, "rgb(239, 178, 0)");
 
@@ -101,12 +103,13 @@ class App extends Component {
             datasets: [{
                 label: "",
                 borderColor: gradientStroke,
+                pointFillColor: 'white',
                 pointBorderColor: 'black',
                 pointBackgroundColor: 'white',
                 pointHoverBackgroundColor: 'white',
                 pointHoverBorderColor: 'black',
-                pointBorderWidth: 6,
-                pointHoverRadius: 6,
+                pointBorderWidth: 5,
+                pointHoverRadius: 5,
                 pointHoverBorderWidth: 1,
                 pointRadius: 1,
                 fill: true,
@@ -119,6 +122,8 @@ class App extends Component {
     };
 
     const options = {
+        responsive: true,
+        maintainAspectRatio: false,
         hover: {
             mode: 'index'
         },
@@ -126,7 +131,31 @@ class App extends Component {
             easing: "easeInOutBack"
         },
         legend: {
-            position: "bottom"
+            display: false
+        },
+        layout: {
+            padding: {
+                left: 50,
+                right: 0,
+                top: 20,
+                bottom: 0
+            }
+        },
+        tooltips: {
+            titleSpacing:10,
+            displayColors:false,
+            
+            callbacks: {
+                labelColor: function(tooltipItem, chart) {
+                    return {
+                        borderColor: 'rgb(255, 0, 0)',
+                        backgroundColor: 'rgb(255, 0, 0)'
+                    }
+                },
+                labelTextColor:function(tooltipItem, chart){
+                    return '#fff';
+                }
+            }
         },
         scales: {
             yAxes: [{
@@ -145,7 +174,8 @@ class App extends Component {
             }],
             xAxes: [{
                 gridLines: {
-                    zeroLineColor: "transparent"
+                    zeroLineColor: "transparent",
+                    fontSize:14
                 },
                 ticks: {
                     padding: 20,
@@ -153,14 +183,7 @@ class App extends Component {
                     fontStyle: "bold"
                 }
             }]
-        },
-        options: {
-            elements: {
-                line: {
-                    tension: 0, // disables bezier curves
-                }
-            }
-        }
+        }        
     }
     
     new Chart(ctx, {
